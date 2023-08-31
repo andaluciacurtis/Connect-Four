@@ -1,8 +1,26 @@
-const squares = document.querySelectorAll('.grid div');
+const gridDisplay = document.querySelector('.grid');
 const result = document.querySelector('#result');
 const displayCurrentPlayer = document.querySelector('#current-player');
 
 let currentPlayer = 1;
+let squares;
+
+createBoard();
+
+function createBoard() {
+  for (let i = 0; i < 42; i++) {
+    let square = document.createElement("div");
+    gridDisplay.appendChild(square);
+  }
+
+  for (let i = 0; i < 7; i++) {
+    let square = document.createElement("div");
+    square.classList.add("taken");
+    gridDisplay.appendChild(square);
+  }
+
+  squares = document.querySelectorAll('.grid div');
+}
 
 function checkBoard() {
   let currentPlayerClass;
@@ -10,15 +28,12 @@ function checkBoard() {
 
   for (let i = 0; i < squares.length; i++) {
     if (squares[i].classList.contains(currentPlayerClass)) {
-      // if ((i < 28 && squares[i + 7].classList.contains('taken') && squares[i + 14].classList.contains('taken') && squares[i + 21].classList.contains('taken')) || (i % 7 > 0 && i % 7 <= 4 && squares[i + 1].classList.contains('taken') && squares[i + 2].classList.contains('taken') && squares[i + 3].classList.contains('taken'))) {
-      //   alert('you win');
-      // }
-      if ((i < 20 && squares[i + 7].classList.contains(currentPlayerClass) && squares[i + 14].classList.contains(currentPlayerClass) &&   
+      if ((i < 27 && squares[i + 7].classList.contains(currentPlayerClass) && squares[i + 14].classList.contains(currentPlayerClass) &&   
            squares[i + 21].classList.contains(currentPlayerClass))
           || 
           (i % 7 <= 4 && i % 7 > 0 && squares[i + 1].classList.contains(currentPlayerClass) && squares[i + 2].classList.contains(currentPlayerClass) && squares[i + 3].classList.contains(currentPlayerClass))) {
         result.innerHTML = `Player ${currentPlayer} wins!!`;
-        return true;
+        gridDisplay.style.display = 'none';
       }
     }
   }
@@ -37,9 +52,6 @@ for (let i = 0; i < squares.length; i++) {
       } 
     } else {
       alert('cant go there');
-    }
-    if (checkBoard()) {
-
     }
     currentPlayer === 1 ? currentPlayer = 2 : currentPlayer = 1; 
   }
